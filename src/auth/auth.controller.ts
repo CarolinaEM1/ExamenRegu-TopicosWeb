@@ -1,4 +1,23 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
+import { AuthService } from './auth.service';
+
+class LoginDto {
+  email: string;
+  password: string;
+}
 
 @Controller('auth')
-export class AuthController {}
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('login')
+  async login(@Body() body: LoginDto) {
+    const user = await this.authService.validateUser(body.email, body.password);
+
+    // En Etapa 3 aquí agregaremos token
+    return {
+      message: 'Login exitoso',
+      user,
+    };
+  }
+}

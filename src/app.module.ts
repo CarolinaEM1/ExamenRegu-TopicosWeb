@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SupabaseService } from './supabase.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UsersModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // <-- ESTO ES LO IMPORTANTE
+    }),
+    UsersModule,
+    AuthModule,
+  ],
   providers: [SupabaseService],
-  exports: [SupabaseService],
 })
 export class AppModule {}
