@@ -1,5 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { SupabaseService } from '../supabase.service';
+import { UseGuards } from '@nestjs/common';
+import { TokenGuard } from '../auth/token/token.guard';
+
+@UseGuards(TokenGuard)
 
 @Controller('examen/api/v1')
 export class ExamenApiController {
